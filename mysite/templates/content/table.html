@@ -128,7 +128,7 @@
                         <div class="card-header ">
                             <h4 class="card-title">Word List</h4>
                             <p class="card-category">The number of speaking words </p>
-                            <p class="card-category">negative word</p>
+                            <hr>
                         </div>
                         <div class="card-body">
                             <canvas id="bar-chart-horizontal" width="400" height="250"></canvas>
@@ -138,29 +138,31 @@
                 </div>
                 <div class="col-md-12">
                     <div class="card strpied-tabled-with-hover">
-                        <div class="card-header ">
-                            <h4 class="card-title">대상자 목록</h4>
-                            {#<p class="card-category">Here is a subtitle for this table</p>#}
+                        <div class="card-header">
+                            <h4 class="card-title mx-3">대상자 목록</h4>
+                            <blockquote class="blockquote text-right">
+                                <p class="mx-4"><a href="/content/user" class="text-secondary">유저추가</a></p>
+                            </blockquote>
                         </div>
-                        <div class="card-body table-full-width table-responsive">
-                            <table class="table table-hover table-striped">
+                        <div class="card-body table-responsive">
+                            <table class="table table-hover">
                                 <thead>
-                                <th>대상자 ID</th>
-                                <th>이름</th>
-                                <th>성별</th>
-                                <th>전화번호</th>
-                                <th>상태</th>
-                                <th>수정</th>
+                                    <th scope="col">대상자 ID</th>
+                                    <th scope="col">이름</th>
+                                    <th scope="col">성별</th>
+                                    <th scope="col">전화번호</th>
+                                    <th scope="col">상태</th>
+                                    <th scope="col">수정</th>
                                 </thead>
                                 <tbody>
                                 {% for recipient in recipients %}
                                     <tr>
                                         <td>{{ recipient.user_id }}</td>
-                                        <td><a href="/content/dashboard/{{ recipient.user_id }}">{{ recipient.name }}</a></td>
+                                        <td><a href="/content/dashboard/{{ recipient.user_id }}" class="text_secondary">{{ recipient.name }}</a></td>
                                         <td>{{ recipient.gender }}</td>
                                         <td>{{ recipient.contact }}</td>
                                         <td>{{ recipient.status }}</td>
-                                        <td><a href="/content/user/{{ recipient.user_id }}">정보수정</a></td>
+                                        <td><a class="text_secondary" href="/content/user/{{ recipient.user_id }}">수정</a></td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -168,95 +170,9 @@
                         </div>
                     </div>
                 </div>
-                <!--
-                <div class="col-md-12">
-                    <div class="card card-plain table-plain-bg">
-                        <div class="card-header ">
-                            <h4 class="card-title">Table on Plain Background</h4>
-                            <p class="card-category">Here is a subtitle for this table</p>
-                        </div>
-                        <div class="card-body table-full-width table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Salary</th>
-                                    <th>Country</th>
-                                    <th>City</th>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Dakota Rice</td>
-                                        <td>$36,738</td>
-                                        <td>Niger</td>
-                                        <td>Oud-Turnhout</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Minerva Hooper</td>
-                                        <td>$23,789</td>
-                                        <td>Curaçao</td>
-                                        <td>Sinaai-Waas</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Sage Rodriguez</td>
-                                        <td>$56,142</td>
-                                        <td>Netherlands</td>
-                                        <td>Baileux</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>Philip Chaney</td>
-                                        <td>$38,735</td>
-                                        <td>Korea, South</td>
-                                        <td>Overland Park</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>Doris Greene</td>
-                                        <td>$63,542</td>
-                                        <td>Malawi</td>
-                                        <td>Feldkirchen in Kärnten</td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td>Mason Porter</td>
-                                        <td>$78,615</td>
-                                        <td>Chile</td>
-                                        <td>Gloucester</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                -->
             </div>
         </div>
     </div>
 {% endblock %}
 {% block script %}
-    <script>
-    $('#user_name').click(function () {
-            var recipient_id = $('#user_name').text();
-            console.log(recipient_id);
-
-            $.ajax({
-                url: "/content/table/",
-                data: {
-                    recipient_id: recipient_id,
-                },
-                method: "POST",
-                success: function (data) {
-                    console.log("성공");
-                },
-                complete: function () {
-                    console.log("완료");
-                }
-            });
-        });
-
-    </script>
 {% endblock %}
