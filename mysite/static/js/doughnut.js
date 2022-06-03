@@ -1,19 +1,19 @@
 new Chart(document.getElementById("doughnut-chart"), {
     type: 'doughnut',
     data: {
-      labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+      labels: ["Death", "Afterlife", "Suicide_Method", "Self_Deprecation", "Suicide_Victim"],
       datasets: [
         {
-          label: "Population (millions)",
+          label: "위험 기준(언어적 신호)",
           backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-          data: [2478,5267,734,784,433]
+          data: [13,27,10,27,23]
         }
       ]
     },
     options: {
       title: {
         display: true,
-        text: 'Predicted world population (millions) in 2050'
+        text: "위험 기준(언어적 신호)"
       }
     }
 });

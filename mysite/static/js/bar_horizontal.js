@@ -1,12 +1,12 @@
 new Chart(document.getElementById("bar-chart-horizontal"), {
     type: 'horizontalBar',
     data: {
-      labels: ["Africa", "Asia", "Europe", "Latin America", "North America","Africa", "Asia", "Europe", "Latin America", "North America"],
+      labels: ["죽은", "자살한", "불면증", "자해", "나따위","한심한", "지옥", "하늘나라", "숨이", "겨우"],
       datasets: [
         {
-          label: "Population (millions)",
+          label: "위험 기준(언어적 신호)",
           backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-          data: [2478,5267,734,784,433,2478,5267,734,784,433]
+          data: [13,11,10,8,7,6,5,4,3,2,1]
         }
       ]
     },
@@ -14,7 +14,7 @@ new Chart(document.getElementById("bar-chart-horizontal"), {
       legend: { display: false },
       title: {
         display: true,
-        text: 'Predicted world population (millions) in 2050'
+        text: "사용된 단어 빈도 Top10(언어적 신호)"
       }
     }
 });
