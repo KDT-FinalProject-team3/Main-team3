@@ -11,7 +11,7 @@ from datetime import datetime
 
 class Join(APIView):
     def get(self, request):
-        return render(request, "account/join.html") # Join 들어오면 화면으로 여길 보여줘라!!
+        return render(request, "account/signup.html") # Join 들어오면 화면으로 여길 보여줘라!!
 
     def post(self, request):
         # TODO 회원가입
@@ -42,7 +42,7 @@ class Join(APIView):
 
 class Login(APIView):
     def get(self, request):
-        return render(request, "account/login.html/")
+        return render(request, "account/login-2.html/")
 
     def post(self, request):
         # TODO 로그인

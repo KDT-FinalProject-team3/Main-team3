@@ -1,0 +1,354 @@
+{% extends 'base.html' %}
+
+{% load static %}
+<!-- 사이드바 들어갈곳 -->
+{% block sidebar %}
+    <div class="sidebar" data-color="purple" data-image="{% static "img/sidebar-5.jpg" %}">
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="/content/dashboard" class="simple-text">
+                    <img src="{% static 'img/emotion.png' %}" style="width: 60px; height:60px;"/>
+                    <i>WITH</i>
+                </a>
+            </div>
+
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/content/dashboard">
+                        <i class="pe-7s-graph"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/content/user">
+                        <i class="pe-7s-user"></i>
+                        <p>User Profile</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/content/table">
+                        <i class="pe-7s-note2"></i>
+                        <p>Table List</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/content/notifications">
+                        <i class="pe-7s-bell"></i>
+                        <p>Notifications</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+<!-- 위쪽 네비바 들어갈곳 -->
+{% block navbar %}
+    <nav class="navbar navbar-expand-lg " color-on-scroll="500">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#pablo"> 회원가입 </a>
+            <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                    aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-bar burger-lines"></span>
+                <span class="navbar-toggler-bar burger-lines"></span>
+                <span class="navbar-toggler-bar burger-lines"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navigation">
+                <ul class="nav navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-toggle="dropdown">
+                            <i class="nc-icon nc-palette"></i>
+                            <span class="d-lg-none">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                            <i class="nc-icon nc-planet"></i>
+                            <span class="notification">5</span>
+                            <span class="d-lg-none">Notification</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Notification 1</a>
+                            <a class="dropdown-item" href="#">Notification 2</a>
+                            <a class="dropdown-item" href="#">Notification 3</a>
+                            <a class="dropdown-item" href="#">Notification 4</a>
+                            <a class="dropdown-item" href="#">Another notification</a>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nc-icon nc-zoom-split"></i>
+                            <span class="d-lg-block">&nbsp;Search</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/account/login">
+                            <span class="no-icon">Account</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="no-icon">Dropdown</span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                            <div class="divider"></div>
+                            <a class="dropdown-item" href="#">Separated link</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#pablo">
+                            <span class="no-icon">Log out</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+<!-- 컨텐츠 들어갈곳 -->
+{% block content %}
+    <div class="container" style="margin-top: 5px;">
+        <!-- Sign up form -->
+        <form>
+            <!-- Sign up card -->
+            <div class="card person-card">
+                <div class="card-body">
+                    <!-- Sex image -->
+                    <img id="img_sex" class="person-img"
+                        src="{% static 'img/emotion.png' %}" style="width: 60px; height:60px;">
+                    <h2 id="who_message" class="card-title">회원가입</h2>
+                    <!-- First row (on medium screen) -->
+                    <div class="row">
+                    
+                        <div class="form-group col-md-6">
+                            <label for="id" class="col-form-label">아이디</label>
+                            <input id="id" type="text" class="form-control" placeholder="ID">
+                            <div id="id_feedback" class="invalid-feedback">
+                                
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="password" class="col-form-label">비밀번호</label>
+                            <input id="password" type="text" class="form-control" placeholder="PW">
+                            <div id="password_feedback" class="invalid-feedback">
+                                
+                            </div>                      
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="gender" class="col-form-label">성별</label>
+                            <select id="gender" class="form-control">
+                                <option value="Mr">남성</option>
+                                <option value="Ms.">여성</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="username" class="col-form-label">이름</label>
+                            <input id="username" type="text" class="form-control" placeholder="홍길동">
+                            <div id="username_feedback" class="invalid-feedback">
+                                
+                            </div>                      
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="relationship" class="col-form-label">관계</label>
+                            <input id="relationship" type="text" class="form-control" placeholder="아버지">
+                            <div id="relationship_feedback" class="invalid-feedback">
+                                
+                            </div>                      
+                        </div>
+                    
+                        <div class="form-group col-md-6">
+                            <label for="email" class="col-form-label">이메일</label>
+                            <input id="email" type="text" class="form-control" placeholder="example@navr.com">
+                            <div id="email_feedback" class="invalid-feedback">
+                                
+                            </div>                      
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="phonenumber" class="col-form-label">연락처</label>
+                            <input id="phonenumber" type="text" class="form-control" placeholder="010-****-****">
+                            <div id="phonenumber_feedback" class="invalid-feedback">
+                                
+                            </div>                      
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="address" class="col-form-label">주소</label>
+                            <input id="address" type="text" class="form-control" placeholder="">
+                            <div id="address_feedback" class="invalid-feedback">
+                                
+                            </div>                      
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="recipient_id" class="col-form-label">대상자 고유번호</label>
+                            <input id="recipient_id" type="text" class="form-control" placeholder="number">
+                            <div id="recipient_id_feedback" class="invalid-feedback">
+                                
+                            </div>                      
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 1em;">
+                <button type="button" class="btn btn-primary btn-lg btn-block">등록</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+
+{% block script %}
+<script>
+    function checks() {
+        var getMail = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);
+        var getCheck = RegExp(/^[a-zA-Z0-9]{4,12}$/);
+        var getName = RegExp(/^[가-힣]+$/);
+        {#var getTel = RegExp(/^[0-9]/);#}
+
+        <!-- 아이디 공백-->
+        if ($("#input_id").val() == "") {
+            alert("아이디를 입력해주세요");
+            $("#input_id").focus();
+            return false;
+        }
+        <!-- 패스워드 공백-->
+        if ($("#input_password").val() == "") {
+            alert("패스워드를 입력해주세요");
+            $("#input_password").focus();
+            return false;
+        }
+        <!-- 아이디, 패스워드 같음-->
+        if ($("#input_id").val() == $("#input_password").val()) {
+            alert("아이디와 비밀번호가 같습니다");
+            $("#input_password").val("");
+            $("#input_password").focus();
+            return false;
+        }
+        <!-- 비밀번호 유효성-->
+        if (!getCheck.test($("#input_password").val())) {
+            alert("비밀번호 양식에 맞게 입력해주세요");
+            $("#input_password").val("");
+            $("#input_password").focus();
+            return false;
+        } else if (($("#input_password").val()).length < 8) {
+            alert("비밀번호 양식(8~20자 이내)에 맞게 입력해주세요");
+            $("#input_password").val("");
+            $("#input_password").focus();
+            return false;
+        }
+
+        <!-- 이름 공백-->
+        if ($("#input_name").val() == "") {
+            alert("이름을 입력해주세요");
+            $("#input_name").focus();
+            return false;
+        }
+        <!-- 이름 유효성 검사-->
+        if (!getName.test($("#input_name").val())) {
+            alert("이름형식에 맞게 입력해주세요")
+            $("#input_name").val("");
+            $("#input_name").focus();
+            return false;
+        }
+        <!-- 성별 체크 유효성 검사-->
+        if(!($('#input_gender1')[0].checked ==true || $('#input_gender2')[0].checked ==true)){
+            alert("성별을 선택하세요")
+            return false;
+        }
+
+        <!--이메일 공백 검사-->
+        if ($("#input_email").val() == "") {
+            alert("이메일을 입력해주세요");
+            $("#input_email").focus();
+            return false;
+        }
+        <!-- 이메일 유효성-->
+        if (!getMail.test($("#input_email").val())) {
+            alert("이메일형식에 맞게 입력해주세요")
+            $("#input_email").val("");
+            $("#input_email").focus();
+            return false;
+        }
+
+        <!-- 생일-->
+        if ($("#input_birth").val() == "") {
+            alert("생년월일을 입력해주세요");
+            $("#input_birth").focus();
+            return false;
+        }
+
+        <!-- 전화번호 공백-->
+        if ($("#input_tel").val() == "") {
+            alert("전화번호를 입력해주세요");
+            $("#input_tel").focus();
+            return false;
+        }
+        return true;
+    }
+
+
+    <!-- 검사하고 회원가입-->
+    $('#join_button').click(function () {
+        if (checks()) {
+            let member_type;
+            let gender;
+            if ($('#member_type1').checked ==true) {
+                member_type = 1;
+            } else {
+                member_type = 2;
+            }
+            if ($('#input_gender1').checked ==true) {
+                gender = "남";
+            } else {
+                gender = "여";
+            }
+            let email = $('#input_email').val();
+            let password = $('#input_password').val();
+            let relationship = $('#input_relationship').val();
+            let user_id = $('#input_user_id').val();
+            let name = $('#input_name').val();
+            let birth = $('#input_birth').val();
+            let phonenumber = $('#input_phonenumber').val();
+            let id = $('#input_id').val();
+
+            console.log(gender);
+
+            $.ajax({
+                url: "/account/join/",
+                data: {
+                    id: id,
+                    relationship: relationship,
+                    member_type: member_type,
+                    gender: gender,
+                    user_id : user_id,
+                    email: email,
+                    password: password,
+                    name: name,
+                    birth: birth,
+                    phonenumber: phonenumber
+                },
+                method: "POST",
+                success: function (data) {
+                    console.log("성공");
+                    alert("회원가입 성공했습니다. 로그인해주세요.");
+                    location.replace('/account/login');
+                },
+                error: function (request, status, error) {
+                    console.log("에러");
+                },
+                complete: function () {
+                    console.log("완료");
+                }
+            });
+        } else {
+            return false;
+        }
+    });
+</script>
+{% endblock %}
+
