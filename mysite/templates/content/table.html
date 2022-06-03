@@ -128,7 +128,7 @@
                         <div class="card-header ">
                             <h4 class="card-title">Word List</h4>
                             <p class="card-category">The number of speaking words </p>
-                            <p class="card-category">negative word</p>
+                            <hr>
                         </div>
                         <div class="card-body">
                             <canvas id="bar-chart-horizontal" width="400" height="250"></canvas>
@@ -138,12 +138,14 @@
                 </div>
                 <div class="col-md-12">
                     <div class="card strpied-tabled-with-hover">
-                        <div class="card-header ">
-                            <h4 class="card-title">대상자 목록</h4>
-                            <p class="card-category"></p>
+                        <div class="card-header">
+                            <h4 class="card-title mx-3">대상자 목록</h4>
+                            <blockquote class="blockquote text-right">
+                                <p class="mx-4"><a href="/content/user" class="text-secondary">유저추가</a></p>
+                            </blockquote>
                         </div>
-                        <div class="card-body table-full-width table-responsive">
-                            <table class="table table-hover table-striped">
+                        <div class="card-body table-responsive">
+                            <table class="table table-hover">
                                 <thead>
                                     <th scope="col">대상자 ID</th>
                                     <th scope="col">이름</th>
@@ -156,11 +158,11 @@
                                 {% for recipient in recipients %}
                                     <tr>
                                         <td>{{ recipient.user_id }}</td>
-                                        <td><a href="/content/dashboard/{{ recipient.user_id }}">{{ recipient.name }}</a></td>
+                                        <td><a href="/content/dashboard/{{ recipient.user_id }}" class="text_secondary">{{ recipient.name }}</a></td>
                                         <td>{{ recipient.gender }}</td>
                                         <td>{{ recipient.contact }}</td>
                                         <td>{{ recipient.status }}</td>
-                                        <td><a href="/content/user/{{ recipient.user_id }}">수정</a></td>
+                                        <td><a class="text_secondary" href="/content/user/{{ recipient.user_id }}">수정</a></td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>

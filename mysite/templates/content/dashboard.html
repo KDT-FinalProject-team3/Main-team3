@@ -116,15 +116,10 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8">
-                    <div class="card ">
+                    <div class="card">
                         <div class="card-header ">
-                            {% if recipient %}
-                            <h4 class="card-title">{{ recipient.status }}</h4>
-                            <p class="card-category">The Change of Emotion</p>
-                            {% else %}
                                 <h4 class="card-title">Today's Emotion Status</h4>
-                            <p class="card-category">Today's Emotion Status</p>
-                            {% endif %}
+                                <p class="card-category">Today's Emotion Status</p>
                         </div>
                         <div class="card-body ">
                             <!-- 차트 그릴 캔버스 적용-->
@@ -133,6 +128,88 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-4">
+                            <div class="card card-user">
+                              <div class="card-image">
+                                  <img src="{% static 'img/sidebar-3.jpg' %}" alt="...">
+                              </div>
+                              <div class="card-body">
+                                <div class="author">
+                                    <img class="avatar border-gray" src="{% static 'img/faces/face-7.jpg' %}" alt="...">
+                                    <h3 class="title">김지윤</h3>
+                                  <p class="description">
+                                      <a href="https://www.instagram.com/test_test131/">
+                                          @test_test131
+                                      </a>
+                                  </p>
+                                </div>
+                                <p class="description text-center">
+                                  외출 중입니다.
+                                </p>
+                              </div>
+                            </div>
+                            <div class="card">
+                              <div class="card-header">
+                                  <h4 class="card-title">Other Users</h4>
+                                  <hr>
+                              </div>
+                              <div class="card-body">
+                                <ul class="list-unstyled team-members">
+                                  <li>
+                                    <div class="row">
+                                      <div class="col-md-2 col-2">
+                                        <div class="avatar">
+                                          <img src="{% static 'img/faces/ayo-ogunseinde-2.jpg' %}" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                                        </div>
+                                      </div>
+                                      <div class="col-md-7 col-7">
+                                        원종현
+                                        <br />
+                                        <span class="text-muted"><small>Offline</small></span>
+                                      </div>
+                                      <div class="col-md-3 col-3 text-right">
+                                        <btn class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i></btn>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="row">
+                                      <div class="col-md-2 col-2">
+                                        <div class="avatar">
+                                          <img src="{% static 'img/faces/joe-gardner-2.jpg' %}" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                                        </div>
+                                      </div>
+                                      <div class="col-md-7 col-7">
+                                        강민정
+                                        <br />
+                                        <span class="text-success"><small>Available</small></span>
+                                      </div>
+                                      <div class="col-md-3 col-3 text-right">
+                                        <btn class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i></btn>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="row">
+                                      <div class="col-md-2 col-2">
+                                        <div class="avatar">
+                                          <img src="{% static 'img/faces/clem-onojeghuo-2.jpg' %}" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                                        </div>
+                                      </div>
+                                      <div class="col-ms-7 col-7">
+                                        오정수
+                                        <br />
+                                        <span class="text-danger"><small>Busy</small></span>
+                                      </div>
+                                      <div class="col-md-3 col-3 text-right">
+                                        <btn class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i></btn>
+                                      </div>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
                 <div class="col-md-8">
                     <!--
                     <div class="card ">
@@ -318,4 +395,40 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block script %}
+<script>
+    new Chart(document.getElementById("radar-chart"), {
+        type: 'radar',
+        data: {
+            labels: ["Fear", "Surprised", "Anger", "Sadness", "Neutrality", "Happiness", "Anxiety", "Embarrassed", "Hurt", "interested", "Boredom"],
+            datasets: [
+                {
+                    label: "05-26",
+                    fill: true,
+                    backgroundColor: "rgba(179,181,198,0.2)",
+                    borderColor: "rgba(179,181,198,1)",
+                    pointBorderColor: "#fff",
+                    pointBackgroundColor: "rgba(179,181,198,1)",
+                    data: [-0.62874178, 0.948901868, -1.250223871, 1.23663546, 1.06688676, 5.060591872, -2.18472584, -2.09446212, -2.07416162, -1.700204564, -2.09756552]
+                }, {
+                    label: "05-25",
+                    fill: true,
+                    backgroundColor: "rgba(255,99,132,0.2)",
+                    borderColor: "rgba(255,99,132,1)",
+                    pointBorderColor: "#fff",
+                    pointBackgroundColor: "rgba(255,99,132,1)",
+                    pointBorderColor: "#fff",
+                    data: [1.812462967, 1.524700207, -0.40692597, 1.24381225, 5.239975633, 0.266229047, -2.734003933, -3.396951767, -3.3996747, -2.721486033, -2.960172833]
+                }
+            ]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Emotion Status by a day'
+            }
+        }
+    });
+</script>
 {% endblock %}
