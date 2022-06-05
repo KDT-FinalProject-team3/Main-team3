@@ -5,8 +5,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.response import Response
 # Create your views here.
-from account.models import User
+from account.models import Account
 from datetime import datetime
+
+from content.models import User
 
 
 class Join(APIView):
@@ -17,31 +19,38 @@ class Join(APIView):
         # TODO 회원가입
         id = request.data.get('id')
         email = request.data.get('email')
-        relationship = request.data.get('relationship')
         name = request.data.get('name')
         password = request.data.get('password')
         crypted_password = make_password(password)
         phonenumber = request.data.get('phonenumber')
-        gender = request.data.get('gender')
-        member_type = request.data.get('member_type')   # 1관리자 2보호자
-        recipient_id = request.data.get('recipient_id')
+        user_id = request.data.get('user_id')
+        user_name = request.data.get('user_name')
 
-        User.objects.create(id=id,
-                            password=crypted_password,
-                            relationship=relationship,
-                            recipient_id=recipient_id,
-                            gender=gender,
-                            email=email,
-                            username=name,
-                            phonenumber=phonenumber,
-                            membertype=member_type,
-                            date_joined=datetime.now())
+        user = User.objects.filter(user_id=user_id, name=user_name).first()
+
+        if user is None:
+            return Response(status=400, data=dict(message="회원정보가 잘못되었습니다."))
+
+        Account.objects.create(account=id,
+                               password=crypted_password,
+                               email=email,
+                               name=name,
+                               phonenumber=phonenumber,
+                               membertype=1,
+                               user_id=user_id,
+                               user_name=user_name,
+                               date_joined=datetime.now())
 
         return Response(status=200)
 
 
 class Login(APIView):
     def get(self, request):
+        id = request.session.get('id', None)
+
+        if id:      # 로그인 되어있으면 대시보드 or 테이블
+            return redirect('/content/dashboard')
+
         return render(request, "account/login-2.html/")
 
     def post(self, request):
@@ -49,10 +58,10 @@ class Login(APIView):
         id = request.data.get('id', None)
         password = request.data.get('password', None)
 
-        user = User.objects.filter(id=id).first()
+        user = Account.objects.filter(account=id).first()
 
         if user is None:
-            return Response(status=404, data=dict(message="회원정보가 잘못되었습니다."))
+            return Response(status=400, data=dict(message="회원정보가 잘못되었습니다."))
 
         if check_password(password, user.password):
             # TODO 로그인을 했다. 세션 or 쿠키

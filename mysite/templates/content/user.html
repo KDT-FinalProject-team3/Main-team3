@@ -13,21 +13,9 @@
 
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="/content/dashboard">
-                        <i class="pe-7s-graph"></i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/content/user">
-                        <i class="pe-7s-user"></i>
-                        <p>User Profile</p>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="/content/table">
                         <i class="pe-7s-note2"></i>
-                        <p>Table List</p>
+                        <p>User List</p>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -101,7 +89,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#pablo">
+                        <a class="nav-link" href="{% url 'account:logout' %}">
                             <span class="no-icon">Log out</span>
                         </a>
                     </li>
@@ -118,44 +106,53 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header">
+                            {% if user %}
                             <h4 class="card-title">Edit Profile</h4>
+                            {% else %}
+                            <h4 class="card-title">Create Profile</h4>
+                            {% endif %}
                         </div>
                         <div class="card-body">
-                            <form>
+                            {% if recipient %}
+                            <form action="/content/user/{{ user.user_id }}/" method="post">
+                            {% else %}
+                            <form action="/content/user/" method="post">
+                            {% endif %}
                                 <div class="row">
                                     <div class="col-md-5 pr-1">
                                         <div class="form-group">
-                                            <label>Company (disabled)</label>
-                                            <input type="text" class="form-control" disabled="" placeholder="Company"
-                                                   value="{{ recipient.user_id }}">
+                                            <label>User ID</label>
+                                            <input type="text" class="form-control" disabled="" placeholder="User ID"
+                                                   value="{{ user.user_id }}">
                                         </div>
                                     </div>
                                     <div class="col-md-3 px-1">
                                         <div class="form-group">
-                                            <label>Username</label>
-                                            <input type="text" class="form-control" placeholder="Username"
-                                                   value="{{ recipient.name }}">
+                                            <label>User Name</label>
+                                            <input type="text" class="form-control" placeholder="User Name" name="name"
+                                                   value="{{ user.name }}">
                                         </div>
                                     </div>
                                     <div class="col-md-4 pl-1">
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Email address</label>
-                                            <input type="email" class="form-control" placeholder="Email" value="{{ recipient.email }}">
+                                            <label>Status</label>
+                                            <input type="text" class="form-control" disabled="" placeholder="Status" value="{{ user.status }}">
+
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 pr-1">
                                         <div class="form-group">
-                                            <label>상태</label>
-                                            <input type="text" class="form-control" placeholder="Company" value="{{ recipient.status }}">
+                                            <label for="exampleInputEmail1">Email</label>
+                                            <input type="email" class="form-control" placeholder="Email" name="email" value="{{ user.email }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6 pl-1">
                                         <div class="form-group">
                                             <label>Contact</label>
-                                            <input type="text" class="form-control" placeholder="Last Name"
-                                                   value="{{ recipient.contact }}">
+                                            <input type="tel" class="form-control" placeholder="Contact" name="contact"
+                                                   value="{{ user.contact }}">
                                         </div>
                                     </div>
                                 </div>
@@ -163,29 +160,22 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Address</label>
-                                            <input type="text" class="form-control" placeholder="Home Address"
-                                                   value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09">
+                                            <input type="text" class="form-control" placeholder="Home Address" name="address"
+                                                   value="{{ user.address }}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4 pr-1">
                                         <div class="form-group">
-                                            <label>City</label>
-                                            <input type="text" class="form-control" placeholder="City" value="Mike">
+                                            <label>Gender</label>
+                                            <input type="text" class="form-control" placeholder="Gender" name="gender" value="{{ user.gender }}">
                                         </div>
                                     </div>
                                     <div class="col-md-4 px-1">
                                         <div class="form-group">
-                                            <label>Country</label>
-                                            <input type="text" class="form-control" placeholder="Country"
-                                                   value="Andrew">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 pl-1">
-                                        <div class="form-group">
-                                            <label>Postal Code</label>
-                                            <input type="number" class="form-control" placeholder="ZIP Code">
+                                            <label>Birth</label>
+                                            <input type="date" class="form-control" placeholder="Birth" name="birth" value="{{ user_birth }}">
                                         </div>
                                     </div>
                                 </div>
@@ -193,12 +183,16 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>About Me</label>
-                                            <textarea rows="4" cols="80" class="form-control"
-                                                      placeholder="Here can be your description" value="Mike">{{ recipient.specifics }}</textarea>
+                                            <textarea rows="4" cols="80" class="form-control" name="specifics"
+                                                      placeholder="Specifics">{{ user.specifics }}</textarea>
                                         </div>
                                     </div>
                                 </div>
+                                {% if user %}
                                 <button type="submit" class="btn btn-info btn-fill float-right">Update Profile</button>
+                                {% else %}
+                                <button type="submit" class="btn btn-info btn-fill float-right">Create Profile</button>
+                                {% endif %}
                                 <div class="clearfix"></div>
                             </form>
                         </div>

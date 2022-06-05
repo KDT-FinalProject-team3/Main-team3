@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 
-class Recipient(models.Model):
+class User(models.Model):
     user_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=16)
     contact = models.CharField(max_length=13)
@@ -12,15 +12,16 @@ class Recipient(models.Model):
     address = models.CharField(max_length=45)
     birth = models.DateField()
     status = models.CharField(max_length=8)
-    create_time = models.DateTimeField(blank=True, null=True)
     specifics = models.CharField(max_length=255, blank=True, null=True)
+    create_time = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        managed = False
-        db_table = 'recipient'
+        managed = True
+        db_table = 'user'
+
 
 class EmotionResult(models.Model):
-    user = models.ForeignKey('Recipient', models.DO_NOTHING)
+    user = models.ForeignKey('User', models.DO_NOTHING)
     fear = models.FloatField()
     surprise = models.FloatField()
     anger = models.FloatField()
