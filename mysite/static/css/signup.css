@@ -29,3 +29,6 @@
 .form-control{
     margin-left: -10px;
 }
+.col-form-label{
+    font-weight: bold;
+}

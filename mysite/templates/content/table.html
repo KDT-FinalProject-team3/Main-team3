@@ -12,22 +12,10 @@
             </div>
 
             <ul class="nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/content/dashboard">
-                        <i class="pe-7s-graph"></i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/content/user">
-                        <i class="pe-7s-user"></i>
-                        <p>User Profile</p>
-                    </a>
-                </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="/content/table">
                         <i class="pe-7s-note2"></i>
-                        <p>Table List</p>
+                        <p>User List</p>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -101,7 +89,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#pablo">
+                        <a class="nav-link" href="{% url 'account:logout' %}">
                             <span class="no-icon">Log out</span>
                         </a>
                     </li>
