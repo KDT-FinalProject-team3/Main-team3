@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block header %}
+    <!--css-->
+    <link rel="stylesheet" href="{% static 'css/selectBox.css' %}">
+{% endblock %}
 
 {% block sidebar %}
     <div class="sidebar" data-color="purple" data-image="{% static "img/sidebar-5.jpg" %}">
@@ -13,25 +17,25 @@
 
             <ul class="nav">
                 {% if member != 0 %}
-                <li class="nav-item active">
-                    <a class="nav-link" href="/content/dashboard">
-                        <i class="pe-7s-graph"></i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/content/dashboard">
+                            <i class="pe-7s-graph"></i>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
                 {% elif member == 0 %}
-                <li class="nav-item ">
-                    <a class="nav-link" href="/content/table">
-                        <i class="pe-7s-note2"></i>
-                        <p>User List</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/content/notifications">
-                        <i class="pe-7s-bell"></i>
-                        <p>Notifications</p>
-                    </a>
-                </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/content/table">
+                            <i class="pe-7s-note2"></i>
+                            <p>User List</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/content/notifications">
+                            <i class="pe-7s-bell"></i>
+                            <p>Notifications</p>
+                        </a>
+                    </li>
                 {% endif %}
             </ul>
         </div>
@@ -122,7 +126,7 @@
                             <div class="card-body ">
                                 <!-- 차트 그릴 캔버스 적용-->
                                 <canvas id="radar-chart" width="630" height="430"></canvas>
-                                <script type="text/javascript" src="{% static 'js/radar.js' %}"></script>
+{#                                <script type="text/javascript" src="{% static 'js/radar.js' %}"></script>#}
                             </div>
                         {% else %}
                             <div class="card-header ">
@@ -134,6 +138,30 @@
                                 대상자의 데이터가 없습니다.
                             </div>
                         {% endif %}
+                        <div class="card-footer ">
+                            <hr>
+                            <div style="float:right;">
+                                <div class="selectBox">
+                                    <select name="emotions" class="select">
+                                        <option disabled selected>Emotions 🙂</option>
+                                        <option value="fear">Fear</option>
+                                        <option value="surprised">Surprised</option>
+                                        <option value="anger">Anger</option>
+                                        <option value="sadness">Sadness</option>
+                                        <option value="neutrality">Neutrality</option>
+                                        <option value="happiness">Happiness</option>
+                                        <option value="anxiety">Anxiety</option>
+                                        <option value="embarrassed">Embarrassed</option>
+                                        <option value="hurt">Hurt</option>
+                                        <option value="interested">Interested</option>
+                                        <option value="boredom">Boredom</option>
+                                    </select>
+                                </div>
+                                <button class="w-btn w-btn-indigo" type="button">
+                                    BUTTON
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -252,164 +280,164 @@
                 </div>
             </div>
             <div class="row">
+                <!--
                 <div class="col-md-6">
                     <div class="card">
-                        <!-- 차트 그릴 캔버스 적용-->
                         <canvas id="bar-chart" width="400" height="430"></canvas>
                         <script type="text/javascript" src="{% static 'js/bar.js' %}"></script>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="card">
-                        <!-- 차트 그릴 캔버스 적용-->
+
                         <canvas id="line-chart" width="600" height="400"></canvas>
                         <script type="text/javascript" src="{% static 'js/line.js' %}"></script>
                     </div>
                     <div class="card">
-                        <!-- 차트 그릴 캔버스 적용-->
                         <canvas id="line-chart2" width="600" height="400"></canvas>
                         <script type="text/javascript" src="{% static 'js/line2.js' %}"></script>
                     </div>
-                    <!--
-                    <div class="card  card-tasks">
-                        <div class="card-header ">
-                            <h4 class="card-title">Tasks</h4>
-                            <p class="card-category">Backend development</p>
-                        </div>
-                        <div class="card-body ">
-                            <div class="table-full-width">
-                                <table class="table">
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox" value="">
-                                                        <span class="form-check-sign"></span>
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>Sign contract for "What are conference organizers afraid of?"</td>
-                                            <td class="td-actions text-right">
-                                                <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                                <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox" value="" checked>
-                                                        <span class="form-check-sign"></span>
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                                            <td class="td-actions text-right">
-                                                <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                                <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox" value="" checked>
-                                                        <span class="form-check-sign"></span>
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                                            </td>
-                                            <td class="td-actions text-right">
-                                                <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                                <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox" checked>
-                                                        <span class="form-check-sign"></span>
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>Create 4 Invisible User Experiences you Never Knew About</td>
-                                            <td class="td-actions text-right">
-                                                <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                                <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox" value="">
-                                                        <span class="form-check-sign"></span>
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>Read "Following makes Medium better"</td>
-                                            <td class="td-actions text-right">
-                                                <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                                <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="form-check">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="checkbox" value="" disabled>
-                                                        <span class="form-check-sign"></span>
-                                                    </label>
-                                                </div>
-                                            </td>
-                                            <td>Unfollow 5 enemies from twitter</td>
-                                            <td class="td-actions text-right">
-                                                <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                                <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                    <i class="fa fa-times"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="card-footer ">
-                            <hr>
-                            <div class="stats">
-                                <i class="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago
-                            </div>
+                -->
+                <!--
+                <div class="card  card-tasks">
+                    <div class="card-header ">
+                        <h4 class="card-title">Tasks</h4>
+                        <p class="card-category">Backend development</p>
+                    </div>
+                    <div class="card-body ">
+                        <div class="table-full-width">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="checkbox" value="">
+                                                    <span class="form-check-sign"></span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>Sign contract for "What are conference organizers afraid of?"</td>
+                                        <td class="td-actions text-right">
+                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="checkbox" value="" checked>
+                                                    <span class="form-check-sign"></span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
+                                        <td class="td-actions text-right">
+                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="checkbox" value="" checked>
+                                                    <span class="form-check-sign"></span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
+                                        </td>
+                                        <td class="td-actions text-right">
+                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="checkbox" checked>
+                                                    <span class="form-check-sign"></span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>Create 4 Invisible User Experiences you Never Knew About</td>
+                                        <td class="td-actions text-right">
+                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="checkbox" value="">
+                                                    <span class="form-check-sign"></span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>Read "Following makes Medium better"</td>
+                                        <td class="td-actions text-right">
+                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="checkbox" value="" disabled>
+                                                    <span class="form-check-sign"></span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>Unfollow 5 enemies from twitter</td>
+                                        <td class="td-actions text-right">
+                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                -->
+                    <div class="card-footer ">
+                        <hr>
+                        <div class="stats">
+                            <i class="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago
+                        </div>
+                    </div>
                 </div>
+            -->
             </div>
         </div>
+    </div>
     </div>
 {% endblock %}
 {% block script %}
@@ -420,22 +448,37 @@
                 labels: ["Fear", "Surprised", "Anger", "Sadness", "Neutrality", "Happiness", "Anxiety", "Embarrassed", "Hurt", "interested", "Boredom"],
                 datasets: [
                     {
-                        label: "05-26",
+                        label: "{{ results.0.date }}",
                         fill: true,
                         backgroundColor: "rgba(179,181,198,0.2)",
                         borderColor: "rgba(179,181,198,1)",
                         pointBorderColor: "#fff",
                         pointBackgroundColor: "rgba(179,181,198,1)",
-                        data: [-0.62874178, 0.948901868, -1.250223871, 1.23663546, 1.06688676, 5.060591872, -2.18472584, -2.09446212, -2.07416162, -1.700204564, -2.09756552]
+                        data: [{{ results.0.fear }}, {{ results.0.surprise }}, {{ results.0.anger }}, {{ results.0.sadness }}, {{ results.0.neutrality }}, {{ results.0.happiness }}, {{ results.0.anxiety }}, {{ results.0.embarrassed }}, {{ results.0.hurt }}, {{ results.0.interest }}, {{ results.0.boredom }}]
                     }, {
-                        label: "05-25",
+                        label: "{{ results.1.date }}",
                         fill: true,
                         backgroundColor: "rgba(255,99,132,0.2)",
                         borderColor: "rgba(255,99,132,1)",
                         pointBorderColor: "#fff",
                         pointBackgroundColor: "rgba(255,99,132,1)",
+                        data: [{{ results.1.fear }}, {{ results.1.surprise }}, {{ results.1.anger }}, {{ results.1.sadness }}, {{ results.1.neutrality }}, {{ results.1.happiness }}, {{ results.1.anxiety }}, {{ results.1.embarrassed }}, {{ results.1.hurt }}, {{ results.1.interest }}, {{ results.1.boredom }}]
+                    }, {
+                        label: "{{ results.2.date }}",
+                        fill: true,
+                        backgroundColor: "rgba(197, 173, 230, 0.2)",
+                        borderColor: "rgba(197, 173, 230, 1)",
                         pointBorderColor: "#fff",
-                        data: [1.812462967, 1.524700207, -0.40692597, 1.24381225, 5.239975633, 0.266229047, -2.734003933, -3.396951767, -3.3996747, -2.721486033, -2.960172833]
+                        pointBackgroundColor: "rgba(197, 173, 230, 1)",
+                        data: [{{ results.2.fear }}, {{ results.2.surprise }}, {{ results.2.anger }}, {{ results.2.sadness }}, {{ results.2.neutrality }}, {{ results.2.happiness }}, {{ results.2.anxiety }}, {{ results.2.embarrassed }}, {{ results.2.hurt }}, {{ results.2.interest }}, {{ results.2.boredom }}]
+                    }, {
+                        label: "{{ results.3.date }}",
+                        fill: true,
+                        backgroundColor: "rgba(169, 176, 234, 0.2)",
+                        borderColor: "rgba(169, 176, 234, 1)",
+                        pointBorderColor: "#fff",
+                        pointBackgroundColor: "rgba(169, 176, 234, 1)",
+                        data: [{{ results.3.fear }}, {{ results.3.surprise }}, {{ results.3.anger }}, {{ results.3.sadness }}, {{ results.3.neutrality }}, {{ results.3.happiness }}, {{ results.3.anxiety }}, {{ results.3.embarrassed }}, {{ results.3.hurt }}, {{ results.3.interest }}, {{ results.3.boredom }}]
                     }
                 ]
             },

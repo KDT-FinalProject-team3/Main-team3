@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from dateutil.relativedelta import relativedelta
 from django.shortcuts import render, redirect
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -8,6 +9,8 @@ from rest_framework.views import APIView
 from account.models import Account
 from content.models import User, EmotionResult
 import pandas as pd
+
+from content.processing import make_dict
 
 
 class Dashboard(APIView):
@@ -25,39 +28,38 @@ class Dashboard(APIView):
 
         if membertype == 0:     # 관리자 계정
             if number:          # 유저번호 있을때
-                results = EmotionResult.objects.filter(user_id=number).values()
                 user = User.objects.filter(user_id=number).first()
-
-                columns = ["Fear", "Surprised", "Anger", "Sadness", "Neutrality", "Happiness", "Anxiety", "Embarrassed",
-                           "Hurt", "interested", "Boredom"]
-                if results:
+                results_dict = make_dict(number)
+                color_list = [(179, 181, 198), (253, 171, 88), (255, 99, 132), (207, 149, 254), (168, 254, 149),
+                              (149, 243, 254), (238, 165, 226)]
+                count = [i for i in range(len(results_dict))]
+                if results_dict:
                     context = {'member': membertype,
                                'user': user,
-                               'results': results}
+                               'results': results_dict,
+                               'colors': color_list,
+                               'count': count}
+                    print(context['colors'])
                 else:
                     context = {'member': membertype}
 
                 return render(request, "content/dashboard.html", context)  # Dashboard 화면
+            
             else:               # 유저번호 없으면 테이블로
                 return redirect('/content/table')
 
         else:       # 보호자 계정
             if number:
-                results = EmotionResult.objects.filter(user_id=number).values()
                 user = User.objects.filter(user_id=number).first()
-                results_df = pd.DataFrame(results)
-                results_df = results_df.drop(['id'], axis=1)
-                results_df = results_df.drop(['user_id'], axis=1)
-                results_df['date'] = pd.to_datetime(results_df['date']).dt.date
-                group = results_df.groupby(['date']).mean()
-
-                columns = ["Fear", "Surprised", "Anger", "Sadness", "Neutrality", "Happiness", "Anxiety",
-                           "Embarrassed",
-                           "Hurt", "interested", "Boredom"]
-
-                context = {'user_data': group,
+                results_dict = make_dict(number)
+                color_list = ["179,181,198", "253, 171, 88", "255,99,132", "207, 149, 254", "168, 254, 149",
+                              "149,243,254", "238, 165, 226"]
+                # 빨강, 주황, 파랑, 초록, 하늘, 핑크
+                context = {'results': results_dict,
                            'member': membertype,
-                           'user': user}
+                           'user': user,
+                           'colors': color_list,
+                           'count': range(results_dict)}
 
                 return render(request, "content/dashboard.html", context)  # Dashboard 화면
 
@@ -77,16 +79,18 @@ class UserProfile(APIView):
         if not membertype == 0:
             return redirect('/account/logout')
 
-        context = {}
-
         if number:  # 유저 프로필 보여주기
-            user = User.objects.filter(user_id=number).first()
-            user_birth = str(user.birth)
+            users = User.objects.filter(user_id=number).first()
+            user_birth = str(users.birth)
 
-            context = {'user': user,
-                       'user_birth': user_birth}
+            context = {'users': users,
+                       'users_birth': user_birth}
 
-        return render(request, "content/user.html", context)     # user 화면
+            return render(request, "content/user.html", context)
+
+        else:
+            context = {}
+            return render(request, "content/user.html", context)  # user 화면
 
     def post(self, request, number=None):    # 새로운 유저 생성
         name = request.data.get('name')
@@ -109,7 +113,7 @@ class UserProfile(APIView):
             user.specifics = specifics
             user.save()
 
-            return redirect('/content/user/' + number)
+            return redirect('/content/user/' + str(number))
 
         else:            # 유저 추가하기
             User.objects.create(name=name,
@@ -131,6 +135,7 @@ class Table(APIView):
 
         if id is None:
             return render(request, 'account/login-2.html')
+
         recipients = User.objects.all()
         context = {'recipients': recipients}
 
