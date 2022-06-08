@@ -16,6 +16,7 @@ Including another URLconf
 from django.urls import path, include
 
 from account.views import Login
+import content.processing
 
 urlpatterns = [
     path('', Login.as_view(), name="login"),

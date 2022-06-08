@@ -124,6 +124,21 @@
                                 <p class="card-category">Today's Emotion Status</p>
                             </div>
                             <div class="card-body ">
+                            <form action="/content/dashboard/{{ user.user_id }}/" method="get">
+                                <div class="col-md-4 px-1">
+                                    <div class="form-group">
+                                        <label>Start</label>
+                                        <input type="date" class="form-control" placeholder="Start" name="start">
+                                    </div>
+                                </div>
+                                <div class="col-md-4 px-1">
+                                    <div class="form-group">
+                                        <label>End</label>
+                                        <input type="date" class="form-control" placeholder="End" name="end">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-info btn-fill float-right">선택</button>
+                                </form>
                                 <!-- 차트 그릴 캔버스 적용-->
                                 <canvas id="radar-chart" width="630" height="430"></canvas>
 {#                                <script type="text/javascript" src="{% static 'js/radar.js' %}"></script>#}
@@ -447,39 +462,15 @@
             data: {
                 labels: ["Fear", "Surprised", "Anger", "Sadness", "Neutrality", "Happiness", "Anxiety", "Embarrassed", "Hurt", "interested", "Boredom"],
                 datasets: [
-                    {
-                        label: "{{ results.0.date }}",
+                    {% for result in results %}{
+                        label: "{{ result.date }}",
                         fill: true,
-                        backgroundColor: "rgba(179,181,198,0.2)",
-                        borderColor: "rgba(179,181,198,1)",
+                        backgroundColor: "{{ result.back }}",
+                        borderColor: "{{ result.color }}",
                         pointBorderColor: "#fff",
-                        pointBackgroundColor: "rgba(179,181,198,1)",
-                        data: [{{ results.0.fear }}, {{ results.0.surprise }}, {{ results.0.anger }}, {{ results.0.sadness }}, {{ results.0.neutrality }}, {{ results.0.happiness }}, {{ results.0.anxiety }}, {{ results.0.embarrassed }}, {{ results.0.hurt }}, {{ results.0.interest }}, {{ results.0.boredom }}]
-                    }, {
-                        label: "{{ results.1.date }}",
-                        fill: true,
-                        backgroundColor: "rgba(255,99,132,0.2)",
-                        borderColor: "rgba(255,99,132,1)",
-                        pointBorderColor: "#fff",
-                        pointBackgroundColor: "rgba(255,99,132,1)",
-                        data: [{{ results.1.fear }}, {{ results.1.surprise }}, {{ results.1.anger }}, {{ results.1.sadness }}, {{ results.1.neutrality }}, {{ results.1.happiness }}, {{ results.1.anxiety }}, {{ results.1.embarrassed }}, {{ results.1.hurt }}, {{ results.1.interest }}, {{ results.1.boredom }}]
-                    }, {
-                        label: "{{ results.2.date }}",
-                        fill: true,
-                        backgroundColor: "rgba(197, 173, 230, 0.2)",
-                        borderColor: "rgba(197, 173, 230, 1)",
-                        pointBorderColor: "#fff",
-                        pointBackgroundColor: "rgba(197, 173, 230, 1)",
-                        data: [{{ results.2.fear }}, {{ results.2.surprise }}, {{ results.2.anger }}, {{ results.2.sadness }}, {{ results.2.neutrality }}, {{ results.2.happiness }}, {{ results.2.anxiety }}, {{ results.2.embarrassed }}, {{ results.2.hurt }}, {{ results.2.interest }}, {{ results.2.boredom }}]
-                    }, {
-                        label: "{{ results.3.date }}",
-                        fill: true,
-                        backgroundColor: "rgba(169, 176, 234, 0.2)",
-                        borderColor: "rgba(169, 176, 234, 1)",
-                        pointBorderColor: "#fff",
-                        pointBackgroundColor: "rgba(169, 176, 234, 1)",
-                        data: [{{ results.3.fear }}, {{ results.3.surprise }}, {{ results.3.anger }}, {{ results.3.sadness }}, {{ results.3.neutrality }}, {{ results.3.happiness }}, {{ results.3.anxiety }}, {{ results.3.embarrassed }}, {{ results.3.hurt }}, {{ results.3.interest }}, {{ results.3.boredom }}]
-                    }
+                        pointBackgroundColor: "{{ result.color }}",
+                        data: [{{ result.fear }}, {{ result.surprise }}, {{ result.anger }}, {{ result.sadness }}, {{ result.neutrality }}, {{ result.happiness }}, {{ result.anxiety }}, {{ result.embarrassed }}, {{ result.hurt }}, {{ result.interest }}, {{ result.boredom }}]
+                    },{% endfor %}
                 ]
             },
             options: {
