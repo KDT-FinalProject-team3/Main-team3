@@ -51,3 +51,14 @@ class InputSentence(models.Model):
         db_table = 'input_sentence'
 
 
+class S3Image(models.Model):
+    user_id = models.IntegerField()
+    image = models.CharField(max_length=200)
+    date = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 's3_image'
+
+
+

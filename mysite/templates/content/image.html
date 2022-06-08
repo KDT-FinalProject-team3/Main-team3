@@ -12,13 +12,13 @@
             </div>
 
             <ul class="nav">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="/content/table">
                         <i class="pe-7s-note2"></i>
                         <p>User List</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="/content/image">
                         <i class="nc-icon nc-atom"></i>
                         <p>Image List</p>
@@ -109,58 +109,25 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <canvas id="doughnut-chart" width="300" height="250"></canvas>
-                            <script type="text/javascript" src="{% static 'js/doughnut.js' %}"></script>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header ">
-                            <h4 class="card-title">Word List</h4>
-                            <p class="card-category">The number of speaking words </p>
-                            <hr>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="bar-chart-horizontal" width="400" height="250"></canvas>
-                            <script type="text/javascript" src="{% static 'js/bar_horizontal.js' %}"></script>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-md-12">
-                    <div class="card strpied-tabled-with-hover">
+                    <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title mx-3">대상자 목록</h4>
-                            <blockquote class="blockquote text-right">
-                                <p class="mx-4"><a href="/content/user" class="text-secondary">유저추가</a></p>
-                            </blockquote>
+                            <h4 class="card-title">Image List</h4>
+                            <p class="card-category">위험객체가 검출된 이미지입니다.
+                            </p>
                         </div>
-                        <div class="card-body table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <th scope="col">대상자 ID</th>
-                                    <th scope="col">이름</th>
-                                    <th scope="col">성별</th>
-                                    <th scope="col">전화번호</th>
-                                    <th scope="col">상태</th>
-                                    <th scope="col">수정</th>
-                                </thead>
-                                <tbody>
-                                {% for recipient in recipients %}
-                                    <tr>
-                                        <td>{{ recipient.user_id }}</td>
-                                        <td><a href="/content/dashboard/{{ recipient.user_id }}" class="text_secondary">{{ recipient.name }}</a></td>
-                                        <td>{{ recipient.gender }}</td>
-                                        <td>{{ recipient.contact }}</td>
-                                        <td>{{ recipient.status }}</td>
-                                        <td><a class="text_secondary" href="/content/user/{{ recipient.user_id }}">수정</a></td>
-                                    </tr>
+                        <div class="card-body all-icons">
+                            <div class="row">
+                                {% for image in images %}
+                                    <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-6">
+                                        <div style="position: relative; width: 200px; height: 200px; overflow: hidden"
+                                             class="font-icon-detail">
+                                            <a href="{{ image.image }}"><img style="width: 100%; height: 100%"
+                                                                             src="{{ image.image }}"></a>
+                                        </div>
+                                    </div>
                                 {% endfor %}
-                                </tbody>
-                            </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -170,3 +137,5 @@
 {% endblock %}
 {% block script %}
 {% endblock %}
+
+

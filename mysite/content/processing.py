@@ -11,30 +11,30 @@ from content.models import EmotionResult, User
 
 
 def make_dict(number, start=None, end=None):
-    results = EmotionResult.objects.filter(user_id=number).values()
+    now_date = datetime.now()
+    now_date = now_date.date() + relativedelta(days=+1)
+    start_date = now_date + relativedelta(days=-7)  # 6일 전부터
+
+    results = EmotionResult.objects.filter(user_id=number, date__range=[start_date, now_date]).values()
     results_df = pd.DataFrame(results)
     results_df = results_df.drop(['id'], axis=1)
     results_df = results_df.drop(['user_id'], axis=1)
-
-    now_date = datetime.now()
-    now_date = now_date.date()
-    start_date = now_date + relativedelta(days=-6)  # 6일 전부터
 
     print(results_df)
     results_df['date'] = pd.to_datetime(results_df['date']).dt.date
     group = results_df.groupby(['date']).mean().reset_index()
     results_dict = group.to_dict('records')
 
-    # color_list = ["rgba(179,181,198, 1)", "rgba(253, 171, 88, 1)", "rgba(255,99,132, 1)",
-    #               "rgba(207, 149, 254, 1)", "rgba(168, 254, 149, 1)",
-    #               "rgba(149,243,254, 1)", "rgba(238, 165, 226, 1)"]
-    # back_color_list = ["rgba(179,181,198, 0.2)", "rgba(253, 171, 88, 0.2)", "rgba(255,99,132, 0.2)",
-    #                    "rgba(207, 149, 254, 0.2)", "rgba(168, 254, 149, 0.2)",
-    #                    "rgba(149,243,254, 0.2)", "rgba(238, 165, 226, 0.2)"]
-    #
-    # for i in range(len(results_dict)):
-    #     results_dict[i]['color'] = color_list[i]
-    #     results_dict[i]['back'] = back_color_list[i]
+    color_list = ["rgba(179,181,198, 1)", "rgba(253, 171, 88, 1)", "rgba(255,99,132, 1)",
+                  "rgba(207, 149, 254, 1)", "rgba(168, 254, 149, 1)",
+                  "rgba(149,243,254, 1)", "rgba(238, 165, 226, 1)"]
+    back_color_list = ["rgba(179,181,198, 0.2)", "rgba(253, 171, 88, 0.2)", "rgba(255,99,132, 0.2)",
+                       "rgba(207, 149, 254, 0.2)", "rgba(168, 254, 149, 0.2)",
+                       "rgba(149,243,254, 0.2)", "rgba(238, 165, 226, 0.2)"]
+
+    for i in range(len(results_dict)):
+        results_dict[i]['color'] = color_list[i]
+        results_dict[i]['back'] = back_color_list[i]
 
     return results_dict
 
