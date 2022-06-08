@@ -1,12 +1,13 @@
-from datetime import datetime
-
-import pandas as pd
-from dateutil.relativedelta import relativedelta
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
 import paho.mqtt.client as mqtt
-from rest_framework.response import Response
 
+from .kobert import KoBERT
+from .models import InputSentence
+
+import time
+from datetime import datetime
+import pandas as pd
+from dateutil.relativedelta import relativedelta
 from content.models import EmotionResult, User
 
 
@@ -37,6 +38,26 @@ def make_dict(number, start=None, end=None):
         results_dict[i]['back'] = back_color_list[i]
 
     return results_dict
+
+
+def predict():
+    kobert = KoBERT()
+    user_num = 1
+    if InputSentence.objects.filter(done=1):
+        input_sentences = InputSentence.objects.filter(user_num=user_num, done=1)
+
+        for input_sentence in input_sentences:
+            sentence = input_sentence.sentence
+            date = input_sentence.date
+            result_figure = kobert.predict(sentence)
+            kobert.object_figure(result_figure, date)
+            input_sentence.done = 0
+            input_sentence.save()
+            print(input_sentence.sentence, "분류 완료")
+            time.sleep(3)
+        print("모든 분류가 완료되었습니다.")
+    else:
+        print("이미 모든 분류가 완료되었습니다.")
 
 
 # mqtt
