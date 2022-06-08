@@ -51,7 +51,7 @@ class Login(APIView):
         if id:      # 로그인 되어있으면 대시보드 or 테이블
             return redirect('/content/dashboard')
 
-        return render(request, "account/login-2.html/")
+        return render(request, "account/login.html/")
 
     def post(self, request):
         # TODO 로그인

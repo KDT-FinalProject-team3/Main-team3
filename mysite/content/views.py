@@ -18,7 +18,7 @@ class Dashboard(APIView):
         id = request.session.get('id', None)
 
         if id is None:
-            return render(request, 'account/login-2.html')
+            return render(request, 'account/login.html')
 
         membertype = Account.objects.filter(account=id).values('membertype').first()
         membertype = membertype['membertype']
@@ -71,7 +71,7 @@ class UserProfile(APIView):
         id = request.session.get('id', None)
 
         if id is None:  # 로그인 확인
-            return render(request, 'account/login-2.html')
+            return render(request, 'account/login.html')
 
         membertype = Account.objects.filter(account=id).values('membertype').first()
         membertype = membertype['membertype']
@@ -134,7 +134,7 @@ class Table(APIView):
         id = request.session.get('id', None)
 
         if id is None:
-            return render(request, 'account/login-2.html')
+            return render(request, 'account/login.html')
 
         recipients = User.objects.all()
         context = {'recipients': recipients}
@@ -147,7 +147,7 @@ class ImageList(APIView):
         id = request.session.get('id', None)
 
         if id is None:
-            return render(request, 'account/login-2.html')
+            return render(request, 'account/login.html')
 
         images = S3Image.objects.all().values('image')
 
@@ -161,6 +161,6 @@ class Notifications(APIView):
         id = request.session.get('id', None)
 
         if id is None:
-            return render(request, 'account/login-2.html')
+            return render(request, 'account/login.html')
 
         return render(request, "content/notifications.html")  # notifications 화면
