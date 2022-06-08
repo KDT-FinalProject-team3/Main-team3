@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 
 # Create your views here.
 from account.models import Account
-from content.models import User, EmotionResult
+from content.models import User, EmotionResult, S3Image
 import pandas as pd
 
 from content.processing import make_dict
@@ -140,6 +140,20 @@ class Table(APIView):
         context = {'recipients': recipients}
 
         return render(request, "content/table.html", context)  # table 화면
+
+
+class ImageList(APIView):
+    def get(self, request):
+        id = request.session.get('id', None)
+
+        if id is None:
+            return render(request, 'account/login-2.html')
+
+        images = S3Image.objects.all().values('image')
+
+        context = {'images': images}
+
+        return render(request, "content/image.html", context=context)  # image_list 화면
 
 
 class Notifications(APIView):
