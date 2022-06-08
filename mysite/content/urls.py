@@ -1,6 +1,8 @@
 from django.urls import path
 
 from content.views import Dashboard, UserProfile, Table, Notifications
+from . import processing
+
 
 app_name = 'content'
 
@@ -11,4 +13,6 @@ urlpatterns = [
     path('user/<int:number>/', UserProfile.as_view(), name='userprofile'),
     path('table/', Table.as_view(), name='table'),
     path('notifications/', Notifications.as_view(), name='notifications'),
+    path('publish/', processing.publish),
+    path('pub/', processing.pub)
 ]
