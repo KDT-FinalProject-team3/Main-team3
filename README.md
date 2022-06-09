@@ -1,4 +1,10 @@
 # PROJECT TEAM3 (WITH)
+자살 고위험군 대상자들의 위험한 시기 및 징후를 파악하여 관련 기관이나 보호자에게 알림을 주는 시스템
+
+# FUNCTION
+- 실시간 위험객체 검출
+- 대상자의 음성을 인식, 감정분류 후 징후 포착
+- 대상자의 현재 및 일정 기간 감정 수치 시각화
 
 # HOW TO USE COMMAND "python manage.py emotion"
 1. slack - KoBERT모델 다운로드
