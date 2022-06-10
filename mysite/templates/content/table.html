@@ -109,11 +109,12 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
+
+
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
                             <canvas id="doughnut-chart" width="300" height="250"></canvas>
-                            <script type="text/javascript" src="{% static 'js/doughnut.js' %}"></script>
                         </div>
                     </div>
                 </div>
@@ -126,10 +127,11 @@
                         </div>
                         <div class="card-body">
                             <canvas id="bar-chart-horizontal" width="400" height="250"></canvas>
-                            <script type="text/javascript" src="{% static 'js/bar_horizontal.js' %}"></script>
                         </div>
                     </div>
                 </div>
+
+
                 <div class="col-md-12">
                     <div class="card strpied-tabled-with-hover">
                         <div class="card-header">
@@ -141,27 +143,81 @@
                         <div class="card-body table-responsive">
                             <table class="table table-hover">
                                 <thead>
-                                    <th scope="col">대상자 ID</th>
-                                    <th scope="col">이름</th>
-                                    <th scope="col">성별</th>
-                                    <th scope="col">전화번호</th>
-                                    <th scope="col">상태</th>
-                                    <th scope="col">수정</th>
+                                <th scope="col">대상자 ID</th>
+                                <th scope="col">이름</th>
+                                <th scope="col">성별</th>
+                                <th scope="col">전화번호</th>
+                                <th scope="col">상태</th>
+                                <th scope="col">수정</th>
                                 </thead>
                                 <tbody>
-                                {% for recipient in recipients %}
+                                {% for user in users %}
                                     <tr>
-                                        <td>{{ recipient.user_id }}</td>
-                                        <td><a href="/content/dashboard/{{ recipient.user_id }}" class="text_secondary">{{ recipient.name }}</a></td>
-                                        <td>{{ recipient.gender }}</td>
-                                        <td>{{ recipient.contact }}</td>
-                                        <td>{{ recipient.status }}</td>
-                                        <td><a class="text_secondary" href="/content/user/{{ recipient.user_id }}">수정</a></td>
+                                        <td>{{ user.user_id }}</td>
+                                        <td><a href="/content/dashboard/{{ user.user_id }}"
+                                               class="text_secondary">{{ user.name }}</a></td>
+                                        <td>{{ user.gender }}</td>
+                                        <td>{{ user.contact }}</td>
+                                        <td>{{ user.status }}</td>
+                                        <td><a class="text_secondary" href="/content/user/{{ user.user_id }}">수정</a>
+                                        </td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
                             </table>
                         </div>
+                        <!-- 페이징 처리 시작 -->
+                        <ul class="pagination justify-content-center">
+                            <!-- 이전 페이지 -->
+                            {% if users.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link"
+                                       href="?page={{ users.previous_page_number }}">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            <!-- 페이지 리스트 -->
+                            {% for page_number in users.paginator.page_range %}
+                                {% if page_number >= newdatas.number|add:-2 and page_number <= users.number|add:2 %}
+                                    {% if page_number == users.number %}
+                                        <li class="page-item active" aria-current="page">
+                                            <a class="page-link" href="?page={{ page_number }}">
+                                                {{ page_number }}
+                                            </a>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ page_number }}">
+                                                {{ page_number }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                            <!-- 다음 페이지-->
+                            {% if users.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link"
+                                       href="?page={{ users.next_page_number }}">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                        <!-- 페이징 처리 끝-->
                     </div>
                 </div>
             </div>
@@ -169,4 +225,56 @@
     </div>
 {% endblock %}
 {% block script %}
+<script>
+    new Chart(document.getElementById("doughnut-chart"), {
+        type: 'doughnut',
+        data: {
+            labels: ["Death", "suicide", "afterlife", "self_Fulfilling_Prophecy", "suicide_method", "self_deprecation",
+            "physical_discomfort", "suicide_victim"],
+            datasets: [
+                {
+                    label: "위험 기준(언어적 신호)",
+                    backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850", "#FF00FF", "#0099a4", "#f89b00"],
+                    data: [
+                        {% for score in scores %}
+                        {{ score }},
+                        {% endfor %}]
+                }
+            ]
+        },
+        options: {
+            title: {
+                display: true,
+                text: "위험 기준(언어적 신호)"
+            }
+        }
+    });
+</script>
+<script>
+    new Chart(document.getElementById("bar-chart-horizontal"), {
+    type: 'horizontalBar',
+    data: {
+      labels: [
+          {% for label in counts %}
+          "{{ label.0 }}",
+          {% endfor %}],
+      datasets: [
+        {
+          label: "위험 기준(언어적 신호)",
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#3e95cd", "#c45850", "#FF00FF", "#0099a4", "#f89b00"],
+          data: [{% for count in counts %}
+              {{ count.1 }},
+              {% endfor %}]
+        }
+      ]
+    },
+    options: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: "사용된 단어 빈도 Top10(언어적 신호)"
+      }
+    }
+});
+</script>
 {% endblock %}

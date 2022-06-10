@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block sidebar %}
-    <div class="sidebar" data-color="purple" data-image="{% static "img/sidebar-5.jpg" %}">
+    <div class="sidebar" data-color="purple" data-image="{% static 'img/sidebar-5.jpg' %}">s
         <div class="sidebar-wrapper">
             <div class="logo">
                 <a href="/content/dashboard" class="simple-text">
@@ -30,12 +30,6 @@
                             <p>User List</p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="/content/image">
-                        <i class="nc-icon nc-atom"></i>
-                        <p>Image List</p>
-                    </a>
-                </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/content/notifications">
                             <i class="pe-7s-bell"></i>
@@ -127,32 +121,104 @@
                         {% if results %}
                             <div class="card-header ">
                                 <h4 class="card-title">Today's Emotion Status</h4>
-                                <p class="card-category">Today's Emotion Status</p>
+                                <br>
+                                <p class="card-category">
+                                    <center>
+                                        <div id="content_box">
+                                            <link rel="stylesheet" href="//code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+                                            <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+                                            <script src="//code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+                                            <script>
+                                                $(document).ready(function(){
+                                                $.datepicker.regional.ko={closeText:"\ub2eb\uae30",
+                                                prevText:"\uc774\uc804\ub2ec",
+                                                nextText:"\ub2e4\uc74c\ub2ec",
+                                                currentText:"\uc624\ub298",
+                                                monthNames:["1\uc6d4(JAN)","2\uc6d4(FEB)","3\uc6d4(MAR)","4\uc6d4(APR)","5\uc6d4(MAY)","6\uc6d4(JUN)","7\uc6d4(JUL)","8\uc6d4(AUG)","9\uc6d4(SEP)","10\uc6d4(OCT)","11\uc6d4(NOV)","12\uc6d4(DEC)"],
+                                                monthNamesShort:["1\uc6d4","2\uc6d4","3\uc6d4","4\uc6d4","5\uc6d4","6\uc6d4","7\uc6d4","8\uc6d4","9\uc6d4","10\uc6d4","11\uc6d4","12\uc6d4"],
+                                                dayNames:["\uc77c","\uc6d4","\ud654","\uc218","\ubaa9","\uae08","\ud1a0"],
+                                                dayNamesShort:["\uc77c","\uc6d4","\ud654","\uc218","\ubaa9","\uae08","\ud1a0"],
+                                                dayNamesMin:["\uc77c","\uc6d4","\ud654","\uc218","\ubaa9","\uae08","\ud1a0"],
+                                                weekHeader:"Wk",
+                                                dateFormat:"yy-mm-dd",
+                                                firstDay:0,isRTL:!1,
+                                                showMonthAfterYear:!0,
+                                                yearSuffix:"",
+                                                showOn:"both",
+                                                buttonText:"\ub2ec\ub825",
+                                                changeMonth:!0,
+                                                changeYear:!0,
+                                                showButtonPanel:!0,
+                                                yearRange:"c-99:c+99"},
+                                                $.datepicker.setDefaults($.datepicker.regional.ko);
+                                                var e=new Date,
+                                                t=new Date,
+                                                a=e.getMonth()+1,
+                                                o=e.getDate();
+
+                                                a=a<10?"0"+a:a,o=o<10?"0"+o:o;
+
+                                                var n=e.getFullYear()+"-"+a+"-"+o;
+
+                                                t.setDate(e.getDate()-7);
+
+                                                var d=t.getMonth()+1,
+                                                r=t.getDate();
+
+                                                d=d<10?"0"+d:d,
+                                                r=r<10?"0"+r:r;
+
+                                                var i=t.getFullYear()+"-"+d+"-"+r;
+
+                                                $("#sdate").val(i),
+                                                    $("#edate").val(n),
+                                                    $("#sdate").datepicker(),
+                                                    $("#sdate").datepicker("option","maxDate",$("#edate").val()),
+                                                    $("#sdate").datepicker("option","onClose",function(e){$("#edate").datepicker("option","minDate",e),
+                                                    $("#edate").val(e)}),$("#edate").datepicker(),
+                                                    $("#edate").datepicker("option","minDate",$("#sdate").val()),$("#edate").datepicker("option","beforeShow",function(){var e=$("#sdate").val().split("-");
+                                                    e[1]=e[1]-1;
+
+                                                    var t=new Date(e[0],e[1],e[2]),
+                                                    a=new Date(e[0],e[1],e[2]);
+                                                    a.setDate(t.getDate()+7),$("#edate").datepicker("option","maxDate",a)}),
+                                                    $("#edate").datepicker("option","onClose",function(e){$("#sdate").datepicker("option","maxDate",e)})});
+                                            </script>
+                                            <form name="frmEX" method="post" action="/content/dashboard/{{ users.user_id }}/">
+                                                시작일 : <input type="text" name="sdate" id="sdate" size="10" maxlength="10" value="">
+                                                ~
+                                                종료일 : <input type="text" name="edate" id="edate" size="10" maxlength="10" value="">
+                                                <button type="submit" class="w-btn w-btn-indigo">SUBMIT</button>
+                                                <br> 시작일은 종료일 이후 날짜를 선택 할 수 없으며, 종료일은 시작일 이전의 날짜를 선택 할 수 없습니다.
+                                                <br> 종료일 선택시 종료일을 선택 할 수 있는 최대 범위를 시작일 +7일
+                                            </form>
+                                        </div>
+                                    </center>
+                                </p>
+                                <hr>
                             </div>
                             <div class="card-body ">
-                            <form action="/content/dashboard/{{ user.user_id }}/" method="get">
-                                <div class="col-md-4 px-1">
-                                    <div class="form-group">
-                                        <label>Start</label>
-                                        <input type="date" class="form-control" placeholder="Start" name="start">
-                                    </div>
-                                </div>
-                                <div class="col-md-4 px-1">
-                                    <div class="form-group">
-                                        <label>End</label>
-                                        <input type="date" class="form-control" placeholder="End" name="end">
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-info btn-fill float-right">선택</button>
-                                </form>
                                 <!-- 차트 그릴 캔버스 적용-->
                                 <canvas id="radar-chart" width="630" height="430"></canvas>
-{#                                <script type="text/javascript" src="{% static 'js/radar.js' %}"></script>#}
+                            </div>
+                            {% elif line_data %}
+                            <div class="card-header ">
+                                <h4 class="card-title">Today's Emotion Status</h4>
+                                <br>
+                                <p class="card-category">
+                                    <input type="date"><span>~</span><input type="date">
+                                    <button class="w-btn w-btn-indigo" type="button" style="float:right;">SUBMIT</button>
+                                </p>
+                                <hr>
+                            </div>
+                            <div class="card-body ">
+                                <!-- 차트 그릴 캔버스 적용-->
+                                <canvas id="line-chart" width="630" height="430"></canvas>
                             </div>
                         {% else %}
                             <div class="card-header ">
-                                <h4 class="card-title">Today's Emotion Status</h4>
-                                <p class="card-category">Today's Emotion Status</p>
+                                <h4 class="card-title">Emotion Status</h4>
+                                <p class="card-category"><input type="date"></p>
                             </div>
                             <div class="card-body ">
                                 <!-- 유저가 입력한 정보가 없을때 -->
@@ -162,25 +228,26 @@
                         <div class="card-footer ">
                             <hr>
                             <div style="float:right;">
-                                <div class="selectBox">
-                                    <select name="emotions" class="select">
-                                        <option disabled selected>Emotions 🙂</option>
-                                        <option value="fear">Fear</option>
-                                        <option value="surprised">Surprised</option>
-                                        <option value="anger">Anger</option>
-                                        <option value="sadness">Sadness</option>
-                                        <option value="neutrality">Neutrality</option>
-                                        <option value="happiness">Happiness</option>
-                                        <option value="anxiety">Anxiety</option>
-                                        <option value="embarrassed">Embarrassed</option>
-                                        <option value="hurt">Hurt</option>
-                                        <option value="interested">Interested</option>
-                                        <option value="boredom">Boredom</option>
-                                    </select>
-                                </div>
-                                <button class="w-btn w-btn-indigo" type="button">
-                                    BUTTON
-                                </button>
+                                <span id="sb" style="float:right;">
+                                    <form method="post" action="/content/dashboard/{{ users.user_id }}/">
+                                        <select name="emotions" class="select" style="width:120px;height:35px;">
+                                            <option disabled selected>Emotions 🙂</option>
+                                            <option value="fear">Fear</option>
+                                            <option value="surprise">Surprised</option>
+                                            <option value="anger">Anger</option>
+                                            <option value="sadness">Sadness</option>
+                                            <option value="neutrality">Neutrality</option>
+                                            <option value="happiness">Happiness</option>
+                                            <option value="anxiety">Anxiety</option>
+                                            <option value="embarrassed">Embarrassed</option>
+                                            <option value="hurt">Hurt</option>
+                                            <option value="interested">Interested</option>
+                                            <option value="boredom">Boredom</option>
+                                        </select>
+                                        <input type="date" name="line_date">
+                                        <button type="submit" class="w-btn w-btn-indigo">SUBMIT</button>
+                                    </form>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -193,16 +260,20 @@
                         <div class="card-body">
                             <div class="author">
                                 <img class="avatar border-gray" src="{% static 'img/faces/face-7.jpg' %}" alt="...">
-                                <h3 class="title">김지윤</h3>
+                                <h3 class="title">{{users.name}}</h3>
                                 <p class="description">
                                     <a href="https://www.instagram.com/test_test131/">
                                         @test_test131
                                     </a>
                                 </p>
                             </div>
-                            <p class="description text-center">
-                                외출 중입니다.
-                            </p>
+                            <div>
+                                <span style="position:absolute; left:42%;">
+                                    <a class="btn btn-sm btn-outline-success btn-round btn-icon" href="/content/messages/">
+                                        <i class="fa fa-envelope"></i>
+                                    </a>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="card">
@@ -227,8 +298,8 @@
                                             <span class="text-muted"><small>Offline</small></span>
                                         </div>
                                         <div class="col-md-3 col-3 text-right">
-                                            <btn class="btn btn-sm btn-outline-success btn-round btn-icon"><i
-                                                    class="fa fa-envelope"></i></btn>
+                                            <button class="btn btn-sm btn-outline-success btn-round btn-icon"><i
+                                                    class="fa fa-envelope"></i></button>
                                         </div>
                                     </div>
                                 </li>
@@ -241,33 +312,13 @@
                                             </div>
                                         </div>
                                         <div class="col-md-7 col-7">
-                                            강민정
+                                            오정수
                                             <br/>
                                             <span class="text-success"><small>Available</small></span>
                                         </div>
                                         <div class="col-md-3 col-3 text-right">
-                                            <btn class="btn btn-sm btn-outline-success btn-round btn-icon"><i
-                                                    class="fa fa-envelope"></i></btn>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="row">
-                                        <div class="col-md-2 col-2">
-                                            <div class="avatar">
-                                                <img src="{% static 'img/faces/clem-onojeghuo-2.jpg' %}"
-                                                     alt="Circle Image"
-                                                     class="img-circle img-no-padding img-responsive">
-                                            </div>
-                                        </div>
-                                        <div class="col-ms-7 col-7">
-                                            오정수
-                                            <br/>
-                                            <span class="text-danger"><small>Busy</small></span>
-                                        </div>
-                                        <div class="col-md-3 col-3 text-right">
-                                            <btn class="btn btn-sm btn-outline-success btn-round btn-icon"><i
-                                                    class="fa fa-envelope"></i></btn>
+                                            <button class="btn btn-sm btn-outline-success btn-round btn-icon"><i
+                                                    class="fa fa-envelope"></i></button>
                                         </div>
                                     </div>
                                 </li>
@@ -275,187 +326,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8">
-                    <!--
-                    <div class="card ">
-                        <div class="card-header ">
-                            <h4 class="card-title">Users Behavior</h4>
-                            <p class="card-category">24 Hours performance</p>
-                        </div>
-                        <div class="card-body ">
-                            <div id="chartHours" class="ct-chart"></div>
-                        </div>
-                        <div class="card-footer ">
-                            <div class="legend">
-                                <i class="fa fa-circle text-info"></i> Open
-                                <i class="fa fa-circle text-danger"></i> Click
-                                <i class="fa fa-circle text-warning"></i> Click Second Time
-                            </div>
-                            <hr>
-                            <div class="stats">
-                                <i class="fa fa-history"></i> Updated 3 minutes ago
-                            </div>
-                        </div>
-                    </div>
-                    -->
-                </div>
-            </div>
-            <div class="row">
-                <!--
-                <div class="col-md-6">
-                    <div class="card">
-                        <canvas id="bar-chart" width="400" height="430"></canvas>
-                        <script type="text/javascript" src="{% static 'js/bar.js' %}"></script>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card">
-
-                        <canvas id="line-chart" width="600" height="400"></canvas>
-                        <script type="text/javascript" src="{% static 'js/line.js' %}"></script>
-                    </div>
-                    <div class="card">
-                        <canvas id="line-chart2" width="600" height="400"></canvas>
-                        <script type="text/javascript" src="{% static 'js/line2.js' %}"></script>
-                    </div>
-                -->
-                <!--
-                <div class="card  card-tasks">
-                    <div class="card-header ">
-                        <h4 class="card-title">Tasks</h4>
-                        <p class="card-category">Backend development</p>
-                    </div>
-                    <div class="card-body ">
-                        <div class="table-full-width">
-                            <table class="table">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input class="form-check-input" type="checkbox" value="">
-                                                    <span class="form-check-sign"></span>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>Sign contract for "What are conference organizers afraid of?"</td>
-                                        <td class="td-actions text-right">
-                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input class="form-check-input" type="checkbox" value="" checked>
-                                                    <span class="form-check-sign"></span>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                                        <td class="td-actions text-right">
-                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input class="form-check-input" type="checkbox" value="" checked>
-                                                    <span class="form-check-sign"></span>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                                        </td>
-                                        <td class="td-actions text-right">
-                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input class="form-check-input" type="checkbox" checked>
-                                                    <span class="form-check-sign"></span>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>Create 4 Invisible User Experiences you Never Knew About</td>
-                                        <td class="td-actions text-right">
-                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input class="form-check-input" type="checkbox" value="">
-                                                    <span class="form-check-sign"></span>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>Read "Following makes Medium better"</td>
-                                        <td class="td-actions text-right">
-                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input class="form-check-input" type="checkbox" value="" disabled>
-                                                    <span class="form-check-sign"></span>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td>Unfollow 5 enemies from twitter</td>
-                                        <td class="td-actions text-right">
-                                            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-link">
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-link">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="card-footer ">
-                        <hr>
-                        <div class="stats">
-                            <i class="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago
-                        </div>
-                    </div>
-                </div>
-            -->
             </div>
         </div>
     </div>
@@ -483,6 +353,31 @@
                 title: {
                     display: true,
                     text: 'Emotion Status by a day'
+                }
+            }
+        });
+    </script>
+    <script>
+        new Chart(document.getElementById("line-chart"), {
+            type: 'line',
+            data: {
+                labels: [0,2,4,6,8,10,12,14,16,18,20,22],
+                datasets: [{
+                    data: [
+                        {% for data in line_data %}
+                        {{ data.emotion }},
+                        {% endfor %}
+                    ],
+                    label: "{{ label }}",
+                    borderColor: "#3e95cd",
+                    fill: false
+                }
+                ]
+            },
+            options: {
+                title: {
+                display: true,
+                text: "{{ line_data.0.date }} {{ label }}"
                 }
             }
         });

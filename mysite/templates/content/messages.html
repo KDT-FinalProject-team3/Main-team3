@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+{% load static %}
+<!-- 사이드바 들어갈곳 -->
+{% block sidebar %}
+    <div class="sidebar" data-color="purple" data-image="{% static "img/sidebar-5.jpg" %}">
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="/content/dashboard" class="simple-text">
+                    <img src="{% static 'img/emotion.png' %}" style="width: 60px; height:60px;"/>
+                    <i>WITH</i>
+                </a>
+            </div>
+
+            <ul class="nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/content/table">
+                        <i class="pe-7s-note2"></i>
+                        <p>User List</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/content/image">
+                        <i class="nc-icon nc-atom"></i>
+                        <p>Image List</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/content/notifications">
+                        <i class="pe-7s-bell"></i>
+                        <p>Notifications</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+<!-- 위쪽 네비바 들어갈곳 -->
+{% block navbar %}
+    <nav class="navbar navbar-expand-lg " color-on-scroll="500">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#pablo"> Table </a>
+            <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                    aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-bar burger-lines"></span>
+                <span class="navbar-toggler-bar burger-lines"></span>
+                <span class="navbar-toggler-bar burger-lines"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navigation">
+                <ul class="nav navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-toggle="dropdown">
+                            <i class="nc-icon nc-palette"></i>
+                            <span class="d-lg-none">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="dropdown nav-item">
+                        <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                            <i class="nc-icon nc-planet"></i>
+                            <span class="notification">5</span>
+                            <span class="d-lg-none">Notification</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Notification 1</a>
+                            <a class="dropdown-item" href="#">Notification 2</a>
+                            <a class="dropdown-item" href="#">Notification 3</a>
+                            <a class="dropdown-item" href="#">Notification 4</a>
+                            <a class="dropdown-item" href="#">Another notification</a>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nc-icon nc-zoom-split"></i>
+                            <span class="d-lg-block">&nbsp;Search</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/account/login">
+                            <span class="no-icon">Account</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="no-icon">Dropdown</span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                            <div class="divider"></div>
+                            <a class="dropdown-item" href="#">Separated link</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account:logout' %}">
+                            <span class="no-icon">Log out</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+<!-- 컨텐츠 들어갈곳 -->
+{% block content %}
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body ">
+                            <h4 class="card-title">TTS</h4>
+                            <p class="card-category">Text to speech</p>
+                            <hr>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-floating">
+                                <form method="POST" action="/content/publish/">
+                                    {% csrf_token %}
+                                    <textarea class="form-control" name="message" placeholder="Leave a text here" id="floatingTextarea2" style="height: 350px"></textarea>
+                                    <label for="floatingTextarea2"></label>
+                                    <button class="btn btn-primary float-right" style="width: 120px" style="height: 60px" type="submit">Send</button>
+                                    <!--<input type="submit" value="publish" lass="btn btn-primary" style="width: 120px" style="height: 60px">-->
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header ">
+                            <h4 class="card-title">TTS History</h4>
+                            <p class="card-category">TTS History</p>
+                            <hr>
+                        </div>
+                        <div class="d-grid gap-3">
+                                <div id="chat-body">
+                                    <!-- 설정바(최소화, 닫기 버튼 등) -->
+                                    <div class="setting_bar">
+                                        <i class="icon-window-minimize" alt="최소화버튼" title="최소화"></i>
+                                        <i class="icon-window-maximize" alt="최대화버튼" title="최대화"></i>
+                                        <i class="icon-cancel" alt="닫기버튼" title="닫기"></i>
+                                    </div>
+                                    <!-- 알림, 메뉴 기능 -->
+                                    <div class="main-menu">
+                                        <i class="icon-bell" title="알림"></i>
+                                        <i class="icon-ellipsis" title="메뉴"></i>
+                                    </div>
+                                    <!-- 프로필 사진, 프로필명 -->
+                                    <header>
+                                        <img class="profile-img" src="{% static './img/pic/default.png'%}" alt="쀼프로필사진">
+                                        <div class="profile-col">
+                                            <span class="profile-name">김지윤</span>
+                                            <div class="sub-menu">
+                                                <i class="icon-box" title="채팅방 서랍"></i>
+                                                <i class="icon-search" title="검색"></i>
+                                            </div>
+                                        </div>
+                                    </header>
+                                    <main>
+                                        <!-- 고정된 공지사항 영역 -->
+                                        <div class="notice-bar">
+                                            <i class="icon-bullhorn"></i>
+                                            <span>멘트를 고정해놓는 곳입니다.</span>
+                                            <i class="icon-down-open-big"></i>
+                                        </div>
+                                        <!-- 채팅 내용 시작 -->
+                                        <div class="chat-content">
+                                            <!-- 메시지 시작 날짜 -->
+                                            <div class="date-line">
+                                                <time datetime="2022-06-8">2021년 6월 8일 월요일</time>
+                                            </div>
+                                            <!-- 채팅 내용 -->
+                                            <div class="main-chat">
+                                                <img class="profile-img" src="{% static './img/pic/default.png' %}"
+                                                     alt="쀼프로필사진">
+                                                <div class="friend-chat-col">
+                                                    <span class="profile-name">김지윤</span>
+                                                    <span class="balloon">????</span>
+                                                </div>
+                                                <time datetime="07:35:00+09:00">오전 7:35</time>
+                                                {% for history in histories %}
+                                                    <div class="me-chat">
+                                                        <div class="me-chat-col">
+                                                            <span class="balloon">{{ history.chats }}</span>
+                                                        </div>
+                                                        <time datetime="07:32:00+09:00">{{ history.date }}</time>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+
+                                        <!-- 채팅 입력창 -->
+                                        <div class="insert-content">
+                                            <form name="chatform" action="#" method="post">
+                                                <textarea name="chat-insert" required></textarea>
+                                                <input type="submit" class="chat-submit" value="전송">
+                                            </form>
+                                            <!-- 채팅 입력 관련 기능(파일 첨부, 캡쳐 등) -->
+<!--                                            <div class="insert-menu">-->
+<!--                                                <i class="icon-smile"></i>-->
+<!--                                                <i class="icon-attach"></i>-->
+<!--                                                <i class="icon-phone"></i>-->
+<!--                                                <i class="icon-calendar-empty"></i>-->
+<!--                                                <i class="icon-camera"></i>-->
+<!--                                            </div>-->
+                                        </div>
+                                    </main>
+                                </div>
+<!--                            <div class="p-2 container-fluid mt-3 ml-4 bg-light border" style="width: 500px" style="height: 50px">어떻게 해야 당신에게 내가 힘이 될 수 있을까요....?</div>-->
+<!--                            <div class="p-2 container-fluid mt-3 ml-4 bg-warning border" style="width: 500px" style="height: 50px">힘들어도, 외로워도, 스트레스를 받아도, 당신을 해치는 방법으로 그 문제들을 다루지 말아요.</div>-->
+<!--                            <div class="p-2 container-fluid mt-3 ml-4 bg-light border" style="width: 500px" style="height: 50px">뭐 어때요, 지금 이대로도 충분히 괜찮아요.</div>-->
+<!--                            <div class="p-2 container-fluid mt-3 ml-4 bg-warning border" style="width: 500px" style="height: 50px">살아주어서 고마워요.</div>-->
+<!--                            <div class="p-2 container-fluid mt-3 ml-4 bg-light border" style="width: 500px" style="height: 50px">거기 괜찮아요? 여기에서 듣고 있어요.</div>-->
+<!--                            <div class="p-2 container-fluid mt-3 ml-4 bg-warning border" style="width: 500px" style="height: 50px">감정을 직면하는 건, 나쁜 일이 아니에요. 적절치 못한 방법으로 폭발시키는 그 방법이 문제인거지. 억누르지 말아요. 도망가지 말아요.</div>-->
+<!--                            <div class="p-2 container-fluid mt-3 ml-4 mb-4 bg-light border" style="width: 500px" style="height: 50px">내가 당신을 위해서 무엇을 해줄 수 있을까요...? 위로하고 싶어요.</div>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div style="overflow:auto; height:500px;" class="card strpied-tabled-with-hover">
+                        <div class="card-header">
+                            <h4 class="card-title mx-3">위로 메시지 목록</h4>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <th scope="col">위로 메시지</th>
+                                </thead>
+                                <tbody>
+                                {% for message in messages %}
+                                    <tr>
+                                        <td>{{ message.text }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+{% endblock %}
