@@ -61,4 +61,20 @@ class S3Image(models.Model):
         db_table = 's3_image'
 
 
+class ComfortBot(models.Model):
+    text = models.CharField(max_length=512)
+
+    class Meta:
+        managed = False
+        db_table = 'comfort_bot'
+
+
+class ChatHistory(models.Model):
+    chats = models.CharField(max_length=200)
+    date = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'chat_history'
+
 
