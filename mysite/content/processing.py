@@ -115,12 +115,17 @@ class StatusJudgment:
             print(user.user_id, "번 유저의 상태가 평온해졌습니다.")
 
 
-def make_dict(number, start=None, end=None):
+def make_dict(number, sdate=None, edate=None):
     now_date = datetime.now()
-    now_date = now_date.date() + relativedelta(days=+1)
-    start_date = now_date + relativedelta(days=-7)  # 6일 전부터
+    now_date = now_date.date()
+    start_date = now_date + relativedelta(days=-6)  # 6일 전부터
 
-    results = EmotionResult.objects.filter(user_id=number, date__range=[start_date, now_date]).values()
+    # sdate 존재x -> 일주일 전부터 오늘날짜까지
+    if sdate:
+        results = EmotionResult.objects.filter(user_id=number, date__range=[sdate, edate + relativedelta(days=1)]).values()
+    else:
+        results = EmotionResult.objects.filter(user_id=number, date__range=[start_date, now_date]).values()
+
     results_df = pd.DataFrame(results)
     results_df = results_df.drop(['id'], axis=1)
     results_df = results_df.drop(['user_id'], axis=1)

@@ -64,7 +64,7 @@ class Dashboard(APIView):
         id = request.session.get('id', None)
 
         if id is None:
-            return render(request, 'account/login-2.html')
+            return render(request, 'account/login.html')
 
         membertype = Account.objects.filter(account=id).values('membertype').first()
         membertype = membertype['membertype']
