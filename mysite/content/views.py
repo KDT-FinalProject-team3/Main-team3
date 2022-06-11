@@ -189,7 +189,7 @@ class UserProfile(APIView):
 
 
 class Table(APIView):
-    def get(self, request):
+    def get(self, request, number=None):
         id = request.session.get('id', None)
 
         if id is None:
@@ -197,11 +197,13 @@ class Table(APIView):
 
         users = User.objects.all()
         page = request.GET.get('page', '1') # 페이지
-        paginator = Paginator(users, 10) # 페이지당 12개
+        paginator = Paginator(users, 10)  # 페이지당 12개
         page_obj = paginator.get_page(page)
 
         judgements = StatusJudgment()
-        total_score, score_data, count_dict = judgements.make_dataframe(1)
+        if number is None:
+            number = 1
+        total_score, score_data, count_dict = judgements.make_dataframe(number)
 
         sorted_count = sorted(
             count_dict.items(),

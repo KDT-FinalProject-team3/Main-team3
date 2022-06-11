@@ -40,7 +40,7 @@ class StatusJudgment:
     def make_dataframe(self, number):
         now_date = datetime.now()
         now_date = now_date.date() + relativedelta(days=+1)
-        start_date = now_date + relativedelta(days=-10)  # 6일 전부터
+        start_date = now_date + relativedelta(days=-2)  # 6일 전부터
         print(now_date, start_date)
 
         e_score = 0     # 감정
@@ -63,18 +63,17 @@ class StatusJudgment:
                 print(emotion, "점수", emotions_list.count(emotion) * weight)
 
         # 언어 점수 계산
-        for sentence in week_sentences:
-            score, cnt_list = self.calculate_score(sentence['sentence'])
-            l_score += score
-            for i in range(8):
-                total_cnt_list[i] += cnt_list[i]
+        if week_sentences:
+            for sentence in week_sentences:
+                score, cnt_list = self.calculate_score(sentence['sentence'])
+                l_score += score
+                for i in range(8):
+                    total_cnt_list[i] += cnt_list[i]
 
-        total_count = sum(total_cnt_list)
+            total_count = sum(total_cnt_list)
 
-        for i in range(len(total_cnt_list)):
-            total_cnt_list[i] = round(total_cnt_list[i] / total_count * 100, 2)
-
-        print(total_cnt_list)
+            for i in range(len(total_cnt_list)):
+                total_cnt_list[i] = round(total_cnt_list[i] / total_count * 100, 2)
 
         total_score = l_score + e_score
         print("감정점수:", e_score, "언어점수:", l_score, "위험도점수:", total_score)
@@ -104,12 +103,12 @@ class StatusJudgment:
         client = mqtt.Client()
         client.connect("18.144.44.57")
 
-        if total_score > 100:
+        if total_score >= 200:
             user.status = '위험'
             user.save()
             client.publish("iot/bigdata", "환자가 위험합니다", qos=1)
             print(user.user_id, "번 유저의 상태가 위험합니다.")
-        elif total_score < 100:
+        elif total_score < 200:
             user.status = '평온'
             user.save()
             print(user.user_id, "번 유저의 상태가 평온해졌습니다.")
