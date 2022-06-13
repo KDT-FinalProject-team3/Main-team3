@@ -40,7 +40,7 @@ class StatusJudgment:
     def make_dataframe(self, number):
         now_date = datetime.now()
         now_date = now_date.date() + relativedelta(days=+1)
-        start_date = now_date + relativedelta(days=-2)  # 6일 전부터
+        start_date = now_date + relativedelta(days=-12)  # 6일 전부터
         print(now_date, start_date)
 
         e_score = 0     # 감정
@@ -56,7 +56,6 @@ class StatusJudgment:
             emotions_df = emotions_df.drop(['id', 'user_id', 'date'], axis=1)
             emotions = emotions_df.idxmax(axis=1)
             emotions_list = list(emotions)
-            print(emotions_list)
 
             for emotion, weight in zip(self.negative_list, self.negative_weight):
                 e_score += emotions_list.count(emotion) * weight
